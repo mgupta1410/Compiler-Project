@@ -1,0 +1,20 @@
+_main[]
+    string g,h;
+    g = "compiler";
+    h = "danish";
+    string dan;
+    dan = g*h;
+    function [string v,string z] = _visibilityDemo[int a, int b]
+        real c;
+        string m1, m2;
+        m1 = "computer";
+        m2 = "programming";
+        function [string s,string killer] = _concat[string m1, string m2]
+            s = m1+m2;
+            z = "sad";
+        end;
+        x = _concat( );
+        c = a/b;
+    end;
+print(h);
+end;

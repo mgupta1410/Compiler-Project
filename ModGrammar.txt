@@ -1,0 +1,87 @@
+86
+1 mainFunction ==> MAIN SQO SQC stmtsAndFunctionDefs END SEMICOLON
+2 stmtsAndFunctionDefs ==> stmtOrFunctionDef sof_
+3 sof_ ==> stmtsAndFunctionDefs
+4 sof_ ==> $
+5 stmtOrFunctionDef ==> stmt  
+6 stmtOrFunctionDef ==> functionDef 
+7 stmt ==> declarationStmt 
+8 stmt ==> assignmentStmtType1 
+9 stmt ==> assignmentStmtType2 
+10 stmt ==> ifStmt 
+11 stmt ==> ioStmt 
+12 stmt ==> funCallStmt SEMICOLON
+13 functionDef ==> FUNCTION SQO parameterList SQC ASSIGNOP FUNID SQO parameterList SQC stmtsAndFunctionDefs END SEMICOLON 
+14 parameterList ==> type ID remainingList
+15 type ==> INT
+16 type ==> REAL 
+17 type ==> STRING 
+18 type ==> MATRIX 
+19 remainingList ==> COMMA parameterList
+20 remainingList ==> $
+21 declarationStmt ==> type varList SEMICOLON 
+22 varList ==> ID moreIds 
+23 moreIds ==> COMMA varList
+24 moreIds ==> $
+25 assignmentStmtType1 ==> ID ASSIGNOP rightHandSideType1 SEMICOLON 
+26 assignmentStmtType2 ==> leftHandSideListVar ASSIGNOP rightHandSideType2 SEMICOLON 
+27 leftHandSideListVar ==> SQO varList SQC 
+28 rightHandSideType1 ==> arithmeticExpression
+29 rightHandSideType1 ==> sizeExpression 
+30 rightHandSideType1 ==> funCallStmt 
+31 rightHandSideType2 ==> sizeExpression 
+32 rightHandSideType2 ==> funCallStmt
+33 sizeExpression ==> SIZE ID 
+34 ifStmt ==> IF OP booleanExpression CL stmt otherStmts restIfStmt_ 
+35 restIfStmt_ ==> ELSE stmt otherStmts ENDIF SEMICOLON 
+36 restIfStmt_ ==> ENDIF SEMICOLON 
+37 otherStmts ==> stmt otherStmts
+38 otherStmts ==> $
+39 ioStmt ==> READ OP ID CL SEMICOLON
+40 ioStmt ==> PRINT OP ID CL SEMICOLON 
+41 funCallStmt ==> FUNID OP inputParameterList CL
+42 inputParameterList ==> var listVar 
+43 inputParameterList ==> $ 
+44 listVar ==> COMMA inputParameterList 
+45 listVar ==> $
+46 arithmeticExpression ==> arithmeticTerm restArithmetic_
+47 restArithmetic_ ==> operatorLowPrecedence arithmeticExpression
+48 restArithmetic_ ==> $
+49 arithmeticTerm ==> factor restTerm_
+50 restTerm_ ==> operatorHighPrecedence arithmeticTerm
+51 restTerm_ ==> $
+52 factor ==> OP arithmeticExpression CL 
+53 factor ==> var
+54 operatorLowPrecedence ==> PLUS
+55 operatorLowPrecedence ==> MINUS
+56 operatorHighPrecedence ==> MUL 
+57 operatorHighPrecedence ==> DIV
+58 booleanExpression ==> OP booleanExpression CL logicalOp OP booleanExpression CL
+59 booleanExpression ==> constrainedVars relationalOp constrainedVars
+60 booleanExpression ==> NOT OP booleanExpression CL
+61 constrainedVars ==> ID
+62 constrainedVars ==> NUM
+63 constrainedVars ==> RNUM
+64 var ==> ID matrixElement 
+65 var ==> NUM 
+66 var ==> RNUM
+67 var ==> STR
+68 var ==> matrix
+69 matrixElement ==> SQO NUM COMMA NUM SQC
+70 matrixElement ==> $
+71 matrix ==> SQO rows SQC
+72 rows ==> row restRow_
+73 restRow_ ==> SEMICOLON rows 
+74 restRow_ ==> $
+75 row ==> NUM remainingColElements_ 
+76 remainingColElements_ ==> remainingColElements
+77 remainingColElements ==> COMMA NUM remainingColElements 
+78 remainingColElements ==> $ 
+79 logicalOp ==> AND 
+80 logicalOp ==> OR
+81 relationalOp ==> LT 
+82 relationalOp ==> LE
+83 relationalOp ==> EQ
+84 relationalOp ==> GT
+85 relationalOp ==> GE
+86 relationalOp ==> NE
